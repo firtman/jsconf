@@ -15,9 +15,9 @@ window.addEventListener('deviceorientation', function(e) {
     b = Math.floor(e.beta);
 	g = Math.floor(e.gamma);
 	var transform = 'rotateZ('+Math.round(e.alpha)+'deg)    rotateX('+Math.round(e.beta)+'deg) rotateY('+Math.round(e.gamma)+'deg)';
-    if (element.style.transform) {
+    if (element.style.transform!=undefined) {
         element.style.transform = transform;   
-    } else if (element.style.webkitTransform) {
+    } else if (element.style.webkitTransform!=undefined) {
         element.style.webkitTransform = transform;   
     }
 });
