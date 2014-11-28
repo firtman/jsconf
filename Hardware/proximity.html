@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<title>Proximity Sensors API</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+    
+<dl>
+    <dt>Proximity</dt>
+    <dd id='status'></dd>
+</dl>
+<script>
+if (window.UserProximityEvent == undefined) {
+    alert("API not available");   
+} else {
+    window.addEventListener('userproximity', function(event) {
+  if (event.near) {
+    document.querySelector("#status").innerHTML = "Near";
+  } else {
+    document.querySelector("#status").innerHTML = "Far";
+  }
+});
+}
+</script>
+    
+    
+<style>
+.night {
+    background: black;
+    color: white;
+}
+</style>    

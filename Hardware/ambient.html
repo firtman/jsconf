@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<title>Ambient Lightning API</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+    
+<dl>
+    <dt>Light Level</dt>
+    <dd id='status'></dd>
+</dl>
+<script>
+if (window.DeviceLightEvent == undefined) {
+    alert("API not available");   
+} else {
+    window.addEventListener('devicelight', function(event) {
+        document.querySelector("#status").innerHTML = event.value;
+        document.querySelector("body").className = (event.value<30)?"night":"day"
+    });
+}
+</script>
+    
+    
+<style>
+.night {
+    background: black;
+    color: white;
+}
+</style>    

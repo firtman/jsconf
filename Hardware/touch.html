@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<title>Touch</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+#output {
+    font-size:80px;
+    text-align: center;
+    color: red;
+}
+</style>
+    
+<script>
+document.addEventListener('touchstart', function(event) {
+    var output = document.getElementById('output');
+    output.innerHTML = event.touches.length + " touch(es)";
+    //event.touches[0].pageX
+});
+</script>
+
+<div id="output"></div>

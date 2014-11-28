@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<title>Speech Recognition</title>
+<meta name="viewport" content="width=device-width,user-scalable=no">
+<meta charset="utf-8">
+<style>
+    a { display: block };
+</style>
+<script>
+var voices;
+    
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; 
+    
+var recognition;
+    
+if (window.SpeechRecognition==undefined) {
+    alert("API not available");   
+} else {
+    recognition = new SpeechRecognition()
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.onresult = function(event) { 
+        if (event.type=="result") {
+            for (var i=0; i<event.results.length; i++) {
+                var confidence = parseInt(event.results[i][0].confidence*100);
+                var text = event.results[i][0].transcript;
+                document.querySelector("output").innerHTML = text + "<p><i>" + confidence + "% confidence</i>";   
+            }
+        }
+    };
+    recognition.onerror = function(event) {
+        console.log(event);
+        
+    }
+};
+
+</script>
+
+<p>
+<a href="javascript:recognition.lang='en-US';recognition.start();">Start recognition in english</a>
+    
+<a href="javascript:recognition.lang='es-AR';recognition.start();">Start recognition in argento</a>    
+</p>
+
+<a href="javascript:recognition.stop()">Stop recognition</a>
+
+<section style="padding: 20px; background: silver; margin: 20px">
+<output>
+
+</output>
+</section>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<title>Gyroscope + Magnetometer</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<img src="http://akamaicovers.oreilly.com/images/0636920026259/cat.gif" width="250">
+    
+<script>
+    
+var element = document.querySelector("img");
+    
+window.addEventListener('deviceorientation', function(e) {
+    a = Math.floor(e.alpha);
+    b = Math.floor(e.beta);
+	g = Math.floor(e.gamma);
+	var transform = 'rotateZ('+Math.round(e.alpha)+'deg)    rotateX('+Math.round(e.beta)+'deg) rotateY('+Math.round(e.gamma)+'deg)';
+    if (element.style.transform) {
+        element.style.transform = transform;   
+    } else if (element.style.webkitTransform) {
+        element.style.webkitTransform = transform;   
+    }
+});
+    
+</script>    
+    

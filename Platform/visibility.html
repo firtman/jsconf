@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<title>Page Visibility API</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+ <script>
+var eventName = "visibilitychange";
+if (document.webkitHidden!=undefined) {
+	eventName = "webkitvisibilitychange";
+} else if (document.mozHidden!=undefined) {
+	eventName = "mozvisibilitychange";
+} else if (document.msHidden!=undefined) {
+	eventName = "msvisibilitychange";
+} else if (document.hidden==undefined) {
+	alert("API not available");	
+}
+
+</script>
+
+<output></output>
+
+<script>
+var output = document.querySelector("output");
+
+function visibilityChanged() {
+    if (document.hidden || document.mozHidden || document.msHidden || document.webkitHidden) {
+        output.innerHTML += "<br>Hidden at " + Date().toString();		
+    } else  {
+        output.innerHTML += "<br>Shown at " + Date().toString();       
+    }
+}
+
+document.addEventListener(eventName, visibilityChanged, false);
+
+</script>

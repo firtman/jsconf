@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<title>Speech Synthesis </title>
+<meta name="viewport" content="width=device-width,user-scalable=no">
+<meta charset="utf-8">
+
+<script>
+var voices;
+    
+if (window.speechSynthesis==undefined) {
+    alert("API not available");   
+} else {
+    if (speechSynthesis.onvoiceschanged==undefined) {
+        // iOS, delayed reading - buggy
+        setTimeout(readVoices, 2000);
+    } else {
+        speechSynthesis.addEventListener("voiceschanged", readVoices);
+    }
+};
+
+function readVoices() {
+    voices = speechSynthesis.getVoices();
+    voices.sort(function(a, b) {
+        if (a.lang<b.lang) {
+            return -1;
+        } else {
+            return 1;
+        }
+    });
+    if (voices.length==0) {
+        // No voices available;
+    } else {
+        var select = document.querySelector("select");
+        for (var i=0; i < voices.length; i++) {
+            select.innerHTML += "<option>" + voices[i].lang + "</option>";
+        }
+        select.value = "en-US";
+    }
+}
+
+function speakText() {
+	 var output = document.querySelector("output");
+
+     var u = new SpeechSynthesisUtterance();
+     u.rate = document.querySelector("#rate").value/10;
+     u.volume = document.querySelector("#volume").value/10;
+     u.pitch = document.querySelector("#pitch").value/10;
+     u.text = document.querySelector("#text").value;
+     u.lang = document.querySelector("#voice").value;
+     u.onstart = function(event) {
+     	output.innerHTML += "Started<br>";
+     }
+     u.onend = function(event) { 
+     	output.innerHTML += "Finished<br>";
+     }
+     speechSynthesis.speak(u);
+}
+
+
+</script>
+
+<h1>Speech Synthesis</h1>
+<p>
+
+</p>
+
+<style>
+output {
+    display: block;
+    min-height: 20px;
+	background-color: #EEE;
+}
+input, select, label {
+	font-size: larger;
+	display: block;
+	width: 90%;
+}
+</style>
+<label for="text">Text:</label>
+<input id="text" value="Hello, I'm talking from a website">
+<label for="voice">Voice (language):</label> 
+<select id="voice"></select>
+
+<input type="button" onclick="speakText()" value="Speak">
+
+<label for="volume">Volume:</label>
+<input type="range" max="10" value="10" id="volume">
+<label for="pitch">Pitch:</label>
+<input type="range" max="20" value="10" id="pitch">
+<label for="pitch">Rate:</label>
+<input type="range" max="70" value="10" id="rate">
+
+
+<output>
+
+</output>

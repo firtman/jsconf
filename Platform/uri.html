@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<title>Uri and Intents</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+    a {
+        padding: 15px; display: block;  
+    }
+</style>
+ 
+<ul>
+    <li><a href="mailto:tome@something.com?Subject=Hi!">Mail</a></li>
+    <li><a href="sms:2020?body=alta+chistes">SMS</a></li>
+    <li><a href="http://maps.apple.com/?q=Obelisco,Buenos+Aires">Apple Maps (on iOS)</a></li>
+    <li><a href="http://maps.google.com/?q=Obelisco,Buenos+Aires">Google Maps (on Android)</a></li>
+    <li><a href="comgooglemaps://?q=Obelisco,Buenos+Aires">Google Maps (on iOS)</a></li>
+    <li><a href="comgooglemaps-x-callback://?q=Obelisco,Buenos+Aires&x-success=http://jsconfar.com&x-source=JSConf">Google Maps (on iOS with Back)</a></li>
+    <li><a href="intent://scan/#Intent;scheme=zxing;package=com.google.zxing.client.android;end">Take a QR code (on Android)</a>
+    <li><a href="whatsapp://send?text=Hello%2C%20JS+Conf!">Whatsapp</a></li>
+</li>
+</ul>

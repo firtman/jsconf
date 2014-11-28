@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<title>Notifications API</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+ <script>
+if (typeof Notification === 'function') { 
+    Notification.requestPermission(function (status) {
+        if (Notification.permission !== status) {
+            Notification.permission = status;
+        }
+        if (Notification.permission === 'granted') {
+            // Ready to notify!
+        }
+    });
+} else {
+    alert('API not available');
+}
+     
+function notify() {
+    var n = new Notification("Notification from the website", { 
+				body: 'This is a description paragraph',
+                icon: 'https://www.jsconfar.com/static/styles/images/favicon.png'
+			});
+    n.onshow = function() { 
+        setTimeout(n.close, 15000);
+    }
+}
+</script>
+<a href="javascript:notify()">Notify something</a>
+    

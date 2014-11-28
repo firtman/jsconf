@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<title>Camera testing</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<script>
+// Multiplatform support
+navigator.getUserMedia = (navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);  
+    
+if (navigator.getUserMedia==undefined) {
+    alert("API not available");
+} else {
+    navigator.getUserMedia(
+        {video:true,audio:true},
+        function(localMediaStream){
+            var video=document.querySelector('video');
+            video.src=
+                URL.createObjectURL(localMediaStream);
+            video.play();
+        },
+        function(){
+            alert("Error playing streaming video");
+        }
+    );
+}
+</script>
+
+<video width="300" height="200" autoplay></video>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<title>Screen Orientation API</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<section></section>
+
+<script>
+    var prefix = 'orientation' in screen ? '' :
+                      'mozOrientation' in screen ? 'moz' :
+                      'msOrientation' in screen ? 'ms' :
+                      null;
+    if (window.onorientationchange==null) {
+        // Old way - Safari
+        window.addEventListener("orientationchange", onChange);
+    } else if (screen.onorientationchange==null) {
+        // Old spec - Firefox / IE
+        screen.addEventListener(prefix + "orientationchange", onChange);
+    } else if (screen.orientation.onchange==null) {
+        // New spec - Chrome
+        screen.orientation.addEventListener("change", onChange);
+    } else {
+        alert("API not available");   
+    }
+    function onChange(event) {
+        var orientation = screen.orientation    ||
+                  screen.mozOrientation ||
+                  screen.msOrientation ||
+                  window.orientation ||
+                  null;
+ 
+        if (typeof orientation === 'object') {
+           // new version
+            orientation = screen.orientation.angle;
+        }    
+        document.querySelector("section").innerHTML = "Change orientation to " + orientation;  
+    }
+    
+    function lockLandscape() {
+        if (screen.lockOrientation) {
+            screen.lockOrientation("landscape");
+        } else if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock("landscape");
+        } else if (screen.mozLockOrientation) {
+            screen.mozLockOrientation("landscape");                
+        } else if (screen.msLockOrientation) {
+            screen.msLockOrientation("landscape");
+        } else {
+            alert("API not available");    
+        }
+    }
+    
+    function unlock() {
+        if (screen.unlockOrientation) {
+            screen.unlockOrientation();
+        } else if (screen.orientation && screen.orientation.unlock) {
+            screen.orientation.unlock();
+        } else if (screen.mozUnlockOrientation) {
+            screen.mozUnlockOrientation();                
+        } else if (screen.msUnlockOrientation) {
+            screen.msUnlockOrientation();
+        } else {
+            alert("API not available");    
+        }
+    }
+</script>
+    
+<a href="javascript:lockLandscape()">Lock Landscape</a>
+<a href="javascript:unlock()">Unlock</a>
+    

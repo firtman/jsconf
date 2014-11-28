@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<title>Battery Status</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+    
+<dl>
+    <dt>Battery Level</dt>
+    <dd><progress max="1"></progress></dd>
+    <dt>Battery status</dt>
+    <dd id='status'></dd>
+</dl>
+<script>
+// Multiplatform - old version
+navigator.battery = navigator.battery || navigator.mozBattery
+                        || navigator.webkitBattery;
+
+if (navigator.battery==undefined && navigator.getBattery==undefined) {
+    alert("API not available");   
+} else {
+    if (navigator.battery) {
+        // Old spec
+        addListeners();
+    } else {
+        // New spec with Promises
+        navigator.getBattery().then(function(battery) {
+            navigator.battery = battery;  // Emulating old spec
+            addListeners();
+        });
+    }
+}
+    
+function addListeners() {
+    navigator.battery.addEventListener("chargingchange", function() {
+        update();
+    });
+    navigator.battery.addEventListener("levelchange", function() {
+        update(); 
+    });   
+    // first call
+    update();
+}
+    
+function update() {
+    document.querySelector("progress").value = navigator.battery.level;       
+    document.querySelector("#status").innerHTML = (navigator.battery.charging)?"Charging":"Not charging";   
+}
+    
+
+
+</script>
+    

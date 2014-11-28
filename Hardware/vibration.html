@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<title>Vibration</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<input type=button value="Single vibration" onclick="vibrate()">
+<input type=button value="Pattern vibration" onclick="vibratePattern()">
+
+<script>
+// Multiplatform
+navigator.vibrate = navigator.vibrate || navigator.mozVibrate
+                        || navigator.webkitVibrate;
+if (navigator.vibrate==undefined) {
+    alert("API not available");   
+}
+    
+function vibrate() {
+    navigator.vibrate(500);
+}
+    
+function vibratePattern() {
+navigator.vibrate([125,75,125,275,200,275,125,75,125,275,200,600,200,600]);
+}
+
+</script>
+    

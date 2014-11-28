@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<title>Geolocation</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<input type=button value="Locate me" onclick="locate()">
+
+<script>
+
+function locate() {
+    navigator.geolocation.getCurrentPosition(
+        function(location) {
+            // Location acquired
+            alert(location.coords.latitude + "," +
+                  location.coords.longitude);
+        },
+        function(error) {
+            // Error
+            alert("Error locating you");
+        }
+    );
+}
+
+</script>
+    

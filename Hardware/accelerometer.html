@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<title>Accelerometer</title>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+#ball {
+    width: 20px; height: 20px; position:absolute;
+	border-radius: 10px; background: red;
+}
+</style>
+
+<div id="ball"></div>
+    
+<script>
+// Position Variables
+var x = 0;
+var y = 0;
+
+// Speed - Velocity
+var vx = 0;
+var vy = 0;
+    
+// Limits
+var maxX = document.documentElement.clientWidth - 20;
+var maxY = document.documentElement.clientHeight - 20;
+
+// Acceleration
+var ax = 0;
+var ay = 0;
+
+var delay = 16;  // Emulates 60fps roughly
+var vMultiplier = 0.01;
+
+if (window.DeviceMotionEvent==undefined) {
+	alert("API not available");
+} else {
+	window.addEventListener("devicemotion", function(event) {
+		ax = event.accelerationIncludingGravity.x;
+		ay = event.accelerationIncludingGravity.y;
+	});
+    // requestAnimationFrame not at Android Browser < 4.4          
+	setInterval(function() {
+		vy = vy + -(ay);
+		vx = vx + ax;
+
+		var ball = document.getElementById("ball");
+		y = parseFloat(y + vy * vMultiplier);
+		x = parseFloat(x + vx * vMultiplier);
+		
+        /* Limits check */
+		if (x<0) { x = 0; vx = 0; }
+		if (y<0) { y = 0; vy = 0; }
+        
+		if (x>maxX) { x = maxX; vx = 0; }
+		if (y>maxY) { y = maxY; vx = 0; }
+
+        /* Position update */
+        var transform = "translate(" + x + "px," + y + "px)";
+		if (ball.style.transform!=undefined) {
+		  ball.style.transform = transform;
+        } else if (ball.style.webkitTransform!=undefined) {
+		  ball.style.webkitTransform = transform; 
+        }
+	}, delay);
+} 
+
+</script>
